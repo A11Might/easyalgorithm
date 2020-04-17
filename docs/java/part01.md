@@ -1,0 +1,328 @@
+# 基础算法
+
+排序、二分、高精度、前缀和与差分、双指针算法、位运算、离散化、区间合并。
+
+---
+
+#### 快速排序（思想：分治）
+
+1. 确定分界点 x：可以是 nums[l]；nums[r]；nums[(l + r) / 2] 或者随机。
+2. 调整区间：将数组划分为 <= x 和 >= x 两个部分（分界点不一定等于 x）。
+3. 递归处理最右两段。
+
+注：快速排序是不稳定的排序，但可以通过加入第二个关键字的方式来变成稳定排序。
+
+```java
+void quickSort(int[] nums, int l, int r) {
+    if (l >= r) return;
+    
+    int i = l - 1, j = r + 1, x = nums[l + r >> 1];
+    while (i < j) {
+        do i++; while (nums[i] < x);
+        do j--; while (nums[j] > x);
+        if (i < j) {
+            int tmp = nums[j];
+            nums[j] = nums[i];
+            nums[i] = tmp;
+        }
+    }
+    
+    quickSort(nums, l, j);
+    quickSort(nums, j + 1, r);
+}
+```
+
+#### 归并排序（思想：分治）
+
+1. 确定分界点：mid = (l + r) / 2。
+2. 递归排序左右两个部分。
+3. 归并：将两个有序数组合并为一个有序序列。
+
+```java
+void mergeSort(int[] nums, int l, int r) {
+    if (l >= r) return;
+    
+    int mid = l + r >> 1;
+    mergeSort(nums, l, mid);
+    mergeSort(nums, mid + 1, r);
+    
+    int k = l, i = l, j = mid + 1;
+    while (i <= mid && j <= r) {
+        if (nums[i] <= nums[j]) tmp[k++] = nums[i++];
+        else tmp[k++] = nums[j++];
+    }
+    
+    while (i <= mid) tmp[k++] = nums[i++];
+    while (j <= r) tmp[k++] = nums[j++];
+    
+    for (i = l; i <= r; i++) nums[i] = tmp[i];
+}
+```
+
+#### 整数二分
+
+单调一定可以二分，但二分不一定需要单调，只要能保证每次将区间长度缩小一半，就可以二分了。也就是说二分的本质不是单调性而是划分区间的边界（根据某个性质能将区间划分为左右两个不相交部分，就可以二分）。
+
+每次缩小区间长度都保证划分区间的边界在区间中，当区间长度为 1 时，区间中的元素就是所求边界。
+
+注：binarySearch2 为什么需要 +1（mid = l + r + 1 >> 1）？
+
+​		因为整除是向下取整。当 l = r - 1 时，如果不 +1 的话 (l + r) / 2 = l，若此时 check(mid) 为 true，则 l 会更新为 l，这样就出现了死循环。
+
+```java
+boolean check(int x) {} // 检查 x 是否满足某种性质
+
+// 区间[l, r]被划分成[l, mid]和[mid + 1, r]时使用：
+int binarySearch1(int l, int r) {
+    while (l < r) {
+        int mid = l + r >> 1;
+        if (check(mid)) r = mid; // check() 判断 mid 是否满足性质
+        else l = mid + 1;
+    }
+    return l;
+}
+
+// 区间[l, r]被划分成[l, mid - 1]和[mid, r]时使用：
+int binarySearch2(int l, int r) {
+    while (l < r) {
+        int mid = l + r + 1 >> 1;
+        if (check(mid)) l = mid;
+        else r = mid - 1;
+    }
+    return l;
+}
+```
+
+#### 浮点数二分
+
+与整数二分相同，只不过没有整除，每次都可以将区间的长度严格的缩小一半，所以不用考虑边界情况。
+
+每次缩小区间长度都保证划分区间的边界在区间中，当区间长度很小时，就可以认为我们找到了答案。
+
+```java
+boolean check(int x) {} // 检查 x 是否满足某种性质
+
+double binarySearch3(double l, double r) {
+    double eps = 1e-6; // eps 表示精度，经验值是题目要求 +2
+    while (r - l > eps) {
+        double mid = (l + r) / 2;
+        if (check(mid)) r = mid;
+        else l = mid;
+    }
+    return l;
+}
+```
+
+#### 高精度加法
+
+1. 大整数存储：使用数组按低位到高位的顺序存储整数，因为当进位时需要在高位前添加数字，如果按高位到低位存储进数组，需要在数组前面加上一个数，这样就要移动整个数组中的元素。
+2. 模拟加法过程：A<sub>i</sub> + B<sub>i</sub> + carry。
+
+```java
+// C = A + B, A >= 0, B >= 0
+List<Integer> add(List<Integer> A, List<Integer> B) {
+    if (B.size() > A.size()) return add(B, A);
+
+    List<Integer> C = new ArrayList<>();
+    int t = 0;
+    for (int i = 0; i < A.size(); i++) {
+        t += A.get(i);
+        if (i < B.size()) t += B.get(i);
+        C.add(t % 10);
+        t /= 10;
+    }
+
+    if (t != 0) C.add(t);
+    return C;
+}
+```
+
+#### 高精度减法
+
+1. 大整数存储：使用数组按低位到高位的顺序存储整数（与加法相同，统一输入输出，方便同时计算加减乘除）。
+2. 判断 A - B:
+   - 如果 A >= B，则计算 A - B。
+   - 如果 A < B，则计算 - (B - A)。
+3. 模拟减法过程：
+   - 如果 A<sub>i</sub> - B<sub>i</sub> - borrow >= 0，则直接计算  A<sub>i</sub> - B<sub>i</sub> - borrow。
+   - 如果 A<sub>i</sub> - B<sub>i</sub> - borrow < 0，则需要借位，计算  A<sub>i</sub> - B<sub>i</sub> - borrow + 10。
+
+注：由于 t = A<sub>i</sub> - B<sub>i</sub> - borrow：t >= 0 时，t = t；t < 0 时，借位 t = t + 10。所以为了方便，直接计算(t + 10) % 10。
+
+```java
+// C = A - B, 满足A >= B, A >= 0, B >= 0
+List<Integer> sub(List<Integer> A, List<Integer> B) {
+    List<Integer> C = new ArrayList<>();
+    for (int i = 0, t = 0; i < A.size(); i++) {
+        t = A.get(i) - t;
+        if (i < B.size()) t -= B.get(i);
+        C.add((t + 10) % 10);
+        if (t >= 0) t = 0;
+        else t = 1;
+    }
+
+    while (C.size() > 1 && C.get(C.size() - 1) == 0) C.remove(0);
+    return C;
+}
+```
+
+#### 高精度乘低精度
+
+1. 大整数存储：使用数组按低位到高位的顺序存储整数（与加法相同，统一输入输出，方便同时计算加减乘除），小整数直接使用 int 存储。
+2. 模拟乘法过程：A<sub>i</sub> * b + carry。
+
+注：与我们人计算方式不同是，大整数每位是乘以整个 b，而不是 b 中的一位。
+
+```java
+// C = A * b, A >= 0, b > 0
+List<Integer> mul(List<Integer> A, int b) {
+    List<Integer> C = new ArrayList<>();
+    int t = 0;
+    for (int i = 0; i < A.size() || t != 0; i++) {
+        if (i < A.size()) t += A.get(i) * b;
+        C.add(t % 10);
+        t /= 10;
+    }
+
+    return C;
+}
+```
+
+#### 高精度除以低精度
+
+1. 大整数存储：使用数组按低位到高位的顺序存储整数（与加法相同，统一输入输出，方便同时计算加减乘除），小整数直接使用 int 存储。
+2. 模拟除法过程：remainder  * 10 + A<sub>i</sub>。
+
+```java
+// A / b = C ... r, A >= 0, b > 0
+int div(List<Integer> A, int b, List<Integer> C) {
+    int t = 0;
+    for (int i = A.size() - 1; i >= 0; i--) {
+        t = t * 10 + A.get(i);
+        C.add(t / b);
+        t %= b;
+    }
+
+    reverse(C);
+    while (C.size() > 1 && C.get(0) == 0) C.remove(0);
+    return t; 
+}
+```
+
+#### 一维前缀和
+
+原序列为 a<sub>1</sub>，a<sub>2</sub>，a<sub>3</sub> ... a<sub>n</sub>，则前缀和 S<sub>i</sub> = a<sub>1</sub> + a<sub>2</sub> + a<sub>3</sub> + ... + a<sub>i</sub>。定义边界：S<sub>0</sub> = 0，这样当求前缀和的时候也可以使用 S[r] - S[0] 来求。
+
+- 如何求 S<sub>i</sub>：S[i] = S[i - 1] + a[i]。
+
+- 作用：快速求解原序列中的一段和（O(1)），a[l] + ... + a[r] = S[r] - S[l - 1]。
+
+#### 二维前缀和
+
+原二维矩阵为 a，则二维前缀和 S[i, j] 表示第 i 行 j 列格子左上部分所有元素的和。
+
+- 如何求 S[i, j]：S[i, j] = S[i - 1, j] + S[i, j - 1] - S[i - 1, j - 1] + a[i, j]，其中 i，j 从 1 开始，方便计算。
+
+- 作用：快速求以(x1, y1)为左上角，(x2, y2)为右下角的子矩阵的和（O(1)），为 S[x2, y2] - S[x1 - 1, y2] - S[x2, y1 - 1] + S[x1 - 1, y1 - 1]。
+
+#### 一维差分
+
+原序列为 a<sub>1</sub>，a<sub>2</sub>，a<sub>3</sub> ... a<sub>n</sub>，构造 b<sub>1</sub>，b<sub>2</sub>，b<sub>3</sub> ... b<sub>n</sub>，使得 a<sub>i</sub> = b<sub>1</sub> + b<sub>2</sub> + ... + b<sub>i</sub>。则 a 为 b 的前缀和，b 为 a 的差分。
+
+- 操作：差分只有一个操作，就是给原序列 a 的区间 [l, r] 中的每个数加上 c：操作为 b[l] += c，b[r + 1] -= c，这样求 b 的前缀和就可以得到原序列中元素 a<sub>i</sub> 加上 c 后的值。
+
+- 如何求：假设原序列元素都为 0，这样构造的差分序列也都为 0。元素 a<sub>1</sub> 的值可以通过在区间 [1, 1] 加上 a<sub>1</sub> 来得到，a<sub>2</sub> 等以此类推。
+
+- 作用：差分适用于在原序列 a 上进行多次区间加 c 的操作，将每次操作的时间复杂度由 O(n) 变为 O(1)。
+
+#### 二维差分
+
+原矩阵为 a[i, j]，构造差分矩阵 b[i, j]，使得原矩阵是差分矩阵的前缀和。
+
+- 操作：给以(x1, y1)为左上角，(x2, y2)为右下角的子矩阵中的所有元素加上 c：S[x1, y1] += c, S[x2 + 1, y1] -= c, S[x1, y2 + 1] -= c, S[x2 + 1, y2 + 1] += c。
+
+- 如何求：同一维差分，不用考虑差分矩阵的构造。可以假设原矩阵元素都为 0，可以通过 m * n 次插入操作来变成初始值为 a[i, j] 的情况。
+
+#### 双指针算法
+
+核心思想：利用某个性质（如单调性：随着 i 指针往后移动，j 指针是单调往后移动的）将原本需要双重循环枚举两个指针的朴素算法（O(n ^ 2)）优化到只用枚举 n 个状态（O(n)）。
+
+常见问题分类：对于一个序列，用两个指针维护一段区间；对于两个序列，维护某种次序，比如归并排序中合并两个有序序列的操作。
+
+```java
+for (int i = 0, j = 0; i < n; i++) {
+    while (j < i && check(i, j)) j++;
+    // 具体问题的逻辑
+}
+```
+
+#### 位运算
+
+- 求 n 的第 k 位数字（个位为第 0 位数字）：n >> k & 1。
+
+  1. 先把第 k 位数字移到最后一位，n >> k。
+  2. 再看个位是什么，x & 1。
+
+- 返回 n 的最后一位 1（lowbit(0b1010) = 0b10）：lowbit(n) = n & -n。
+
+  -x 为 x 的补码，即 x & -x = x & (~x + 1)。
+
+#### 离散化
+
+给定序列 a 的值域远远大于序列个数时，我们不可能开一个值域大小的数组来记录序列 a，此时可以将 a<sub>1</sub>，a<sub>2</sub> ... a<sub>n</sub> 映射为 1，2 ... m，这样只用开一个数组个数大小的数组，这个过程叫做离散化。
+
+- 序列 a 中可能有重复元素：去重（unique()：所有满足 i == 1 或者 a[i] != a[i - 1] 的数就是不重复的数）。
+
+- 如何算出 x 离散后的值（保序离散化：将 a<sub>i</sub> 从小到大映射到下标）：二分。
+
+```java
+List<Integer> alls; // 存储所有待离散化的值
+// 将所有值排序并去掉重复元素
+alls = alls.stream().sorted().distinct().collect(Collectors.toList());
+
+// 二分求出 x 对应的离散化的值
+int find(int x) { // 找到第一个大于等于 x 的位置
+    int l = 0, r = alls.size() - 1;
+    while (l < r) {
+        int mid = l + r >> 1;
+        if (alls[mid] >= x) r = mid;
+        else l = mid + 1;
+    }
+    return r + 1; // 映射到1, 2, ...n
+}
+```
+
+#### 区间合并
+
+若干个区间存在交集，合并有交集的区间（端点相交也合并），返回合并后区间的个数。
+
+1. 按区间的左端点排序。
+
+2. 扫描整个区间，将所有有交集的区间合并。
+
+   维护当前区间 a 的 start 和 end，根据与后一个区间 b 的情况（a 包括 b；a 与 b 有交集，a 与 b 没有交集 ）更新 start 和 end。
+
+```java
+// 将所有存在交集的区间合并
+List<int[]> merge(List<int[]> segs) {
+    List<int[]> ret = new ArrayList<>();
+    
+    segs.sort((o1, o2) -> o1[0] - o2[0]);
+    
+    int st = Integer.MIN_VALUE, ed = Integer.MIN_VALUE;
+    for (int[] seg : segs) {
+        if (seg[0] > ed) {
+            if (st != Integer.MIN_VALUE) ret.add(new int[] {st, ed});
+            st = seg[0];
+            ed = seg[1];
+        } else {
+            ed = max(ed, seg[1]);
+        }
+    }
+    
+    if (st != Integer.MIN_VALUE) ret.add(new int[] {st, ed});
+    
+    return ret;
+}
+```
+
