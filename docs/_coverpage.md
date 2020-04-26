@@ -4,5 +4,5 @@
 
 * -- Edsger Wybe Dijkstra
 
-[GitHub](https://github.com/A11Might/docsify)
+[GitHub](https://github.com/A11Might/easyalgorithm)
 [马上开始](README)
