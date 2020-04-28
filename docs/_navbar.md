@@ -1,4 +1,4 @@
 * 语言
 
-  * [Java](/)
+  * [Java](/README)
   * [C++](/cpp/)

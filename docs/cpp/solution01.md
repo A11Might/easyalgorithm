@@ -4,23 +4,23 @@
 
 | 类别                 | 题目                                                         | 难度 | 题解                   |
 | -------------------- | ------------------------------------------------------------ | ---- | ---------------------- |
-| DFS                  | [842. 排列数字](https://www.acwing.com/problem/content/844/) | 简单 | [Java](java/practice/AcWing%20842.%20排列数字.md) |
-|                      | [843. n-皇后问题](https://www.acwing.com/problem/content/845/) | 中等 | [Java](java/practice/AcWing%20843.%20n-皇后问题.md) |
-| BFS                  | [844. 走迷宫](https://www.acwing.com/problem/content/846/)   | 简单 | [Java](java/practice/AcWing%20844.%20走迷宫.md) |
-|                      | [845. 八数码](https://www.acwing.com/problem/content/847/)   | 中等 | [Java](java/practice/AcWing%20845.%20八数码.md) |
-| 树与图的深度优先遍历 | [846. 树的重心](https://www.acwing.com/problem/content/848/) | 简单 | [Java](java/practice/AcWing%20846.%20树的重心.md) |
-| 树与图的广度优先遍历 | [847. 图中点的层次](https://www.acwing.com/problem/content/849/) | 简单 | [Java](java/practice/AcWing%20847.%20图中点的层次.md) |
-| 拓扑排序             | [848. 有向图的拓扑序列](https://www.acwing.com/problem/content/850/) | 简单 | [Java](java/practice/AcWing%20848.%20有向图的拓扑序列.md) |
-| Dijkstra             | [849. Dijkstra求最短路 I](https://www.acwing.com/problem/content/851/) | 简单 | [Java](java/practice/AcWing%20849.%20Dijkstra求最短路%20I.md) |
-|                      | [850. Dijkstra求最短路 II](https://www.acwing.com/problem/content/852/) | 简单 | [Java](java/practice/AcWing%20850.%20Dijkstra求最短路%20II.md) |
-| bellman-ford         | [853. 有边数限制的最短路](https://www.acwing.com/problem/content/855/) | 简单 | [Java](java/practice/AcWing%20853.%20有边数限制的最短路.md) |
-| spfa                 | [851. spfa求最短路](https://www.acwing.com/problem/content/853/) | 简单 | [Java](java/practice/AcWing%20851.%20spfa求最短路.md) |
-|                      | [852. spfa判断负环](https://www.acwing.com/problem/content/854/) | 简单 | [Java](java/practice/AcWing%20852.%20spfa判断负环.md) |
-| Floyd                | [854. Floyd求最短路](https://www.acwing.com/problem/content/856/) | 简单 | [Java](java/practice/AcWing%20854.%20Floyd求最短路.md) |
-| Prim                 | [858. Prim算法求最小生成树](https://www.acwing.com/problem/content/860/) | 简单 | [Java](java/practice/AcWing%20858.%20Prim算法求最小生成树.md) |
-| Kruskal              | [859. Kruskal算法求最小生成树](https://www.acwing.com/problem/content/861/) | 简单 | [Java](java/practice/AcWing%20859.%20Kruskal算法求最小生成树.md) |
-| 染色法判定二分图     | [860. 染色法判定二分图](https://www.acwing.com/problem/content/862/) | 简单 | [Java](java/practice/AcWing%20860.%20染色法判定二分图.md) |
-| 匈牙利算法           | [861. 二分图的最大匹配](https://www.acwing.com/problem/content/863/) | 简单 | [Java](java/practice/AcWing%20861.%20二分图的最大匹配.md) |
+| DFS                  | [842. 排列数字](https://www.acwing.com/problem/content/844/) | 简单 | [C++](cpp/practice/AcWing%20842.%20排列数字.md) |
+|                      | [843. n-皇后问题](https://www.acwing.com/problem/content/845/) | 中等 | [C++](cpp/practice/AcWing%20843.%20n-皇后问题.md) |
+| BFS                  | [844. 走迷宫](https://www.acwing.com/problem/content/846/)   | 简单 | [C++](cpp/practice/AcWing%20844.%20走迷宫.md) |
+|                      | [845. 八数码](https://www.acwing.com/problem/content/847/)   | 中等 | [C++](cpp/practice/AcWing%20845.%20八数码.md) |
+| 树与图的深度优先遍历 | [846. 树的重心](https://www.acwing.com/problem/content/848/) | 简单 | [C++](cpp/practice/AcWing%20846.%20树的重心.md) |
+| 树与图的广度优先遍历 | [847. 图中点的层次](https://www.acwing.com/problem/content/849/) | 简单 | [C++](cpp/practice/AcWing%20847.%20图中点的层次.md) |
+| 拓扑排序             | [848. 有向图的拓扑序列](https://www.acwing.com/problem/content/850/) | 简单 | [C++](cpp/practice/AcWing%20848.%20有向图的拓扑序列.md) |
+| Dijkstra             | [849. Dijkstra求最短路 I](https://www.acwing.com/problem/content/851/) | 简单 | [C++](cpp/practice/AcWing%20849.%20Dijkstra求最短路%20I.md) |
+|                      | [850. Dijkstra求最短路 II](https://www.acwing.com/problem/content/852/) | 简单 | [C++](cpp/practice/AcWing%20850.%20Dijkstra求最短路%20II.md) |
+| bellman-ford         | [853. 有边数限制的最短路](https://www.acwing.com/problem/content/855/) | 简单 | [C++](cpp/practice/AcWing%20853.%20有边数限制的最短路.md) |
+| spfa                 | [851. spfa求最短路](https://www.acwing.com/problem/content/853/) | 简单 | [C++](cpp/practice/AcWing%20851.%20spfa求最短路.md) |
+|                      | [852. spfa判断负环](https://www.acwing.com/problem/content/854/) | 简单 | [C++](cpp/practice/AcWing%20852.%20spfa判断负环.md) |
+| Floyd                | [854. Floyd求最短路](https://www.acwing.com/problem/content/856/) | 简单 | [C++](cpp/practice/AcWing%20854.%20Floyd求最短路.md) |
+| Prim                 | [858. Prim算法求最小生成树](https://www.acwing.com/problem/content/860/) | 简单 | [C++](cpp/practice/AcWing%20858.%20Prim算法求最小生成树.md) |
+| Kruskal              | [859. Kruskal算法求最小生成树](https://www.acwing.com/problem/content/861/) | 简单 | [C++](cpp/practice/AcWing%20859.%20Kruskal算法求最小生成树.md) |
+| 染色法判定二分图     | [860. 染色法判定二分图](https://www.acwing.com/problem/content/862/) | 简单 | [C++](cpp/practice/AcWing%20860.%20染色法判定二分图.md) |
+| 匈牙利算法           | [861. 二分图的最大匹配](https://www.acwing.com/problem/content/863/) | 简单 | [C++](cpp/practice/AcWing%20861.%20二分图的最大匹配.md) |
 
 
 
