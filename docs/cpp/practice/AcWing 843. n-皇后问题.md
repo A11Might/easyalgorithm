@@ -17,39 +17,38 @@
 
 using namespace std;
 
-const int N = 10, M = 2 * N;
+const int N = 10;
 
 int n;
-char g[N][N];
-bool col[N], dg[M], udg[M];
+int row[N]; // 记录每一行上皇后的放置位置
+bool col[N], dia1[2 * N], dia2[2 * N];
 
 void dfs(int u) {
     if (u == n) {
-        for (int i = 0; i < n; i ++ ) puts(g[i]);
-        puts("");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (row[i] == j) cout << "Q";
+                else cout << ".";
+            }
+            cout << endl;
+        }
+        cout << endl;
         return;
     }
-    
     // 枚举当前行上皇后放置位置
-    for (int i = 0; i < n; i ++ ) {
-        if (!col[i] && !dg[u + i] && !udg[n - u + i]) {
-            g[u][i] = 'Q';
-            col[i] = dg[u + i] = udg[n - u + i] = true;
-            dfs(u + 1);
-            col[i] = dg[u + i] = udg[n - u + i] = false;
-            g[u][i] = '.';
-        }
+    for (int i = 0; i < n; i++) {
+        if (col[i] || dia1[u + i] || dia2[u - i + n]) continue;
+        col[i] = dia1[u + i] = dia2[u - i + n] = true;
+        row[u] = i;
+        dfs(u + 1);
+        col[i] = dia1[u + i] = dia2[u - i + n] = false;
     }
 }
 
 int main() {
     cin >> n;
-    for (int i = 0; i < n; i ++ )
-        for (int j = 0; j < n; j ++ )
-            g[i][j] = '.';
-
     dfs(0);
-
+    
     return 0;
 }
 ```

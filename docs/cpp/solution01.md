@@ -51,12 +51,11 @@
 
 | 类别         | 题目                                                         | 难度 | 题解                   |
 | ------------ | ------------------------------------------------------------ | ---- | ---------------------- |
-| 区间问题     | [905. 区间选点](https://www.acwing.com/problem/content/907/) |      | [Java](java/practice/) |
-|              | [908. 最大不相交区间数量](https://www.acwing.com/problem/content/910/) |      | [Java](java/practice/) |
-|              | [906. 区间分组](https://www.acwing.com/problem/content/908/) |      | [Java](java/practice/) |
-|              | [907. 区间覆盖](https://www.acwing.com/problem/content/909/) |      | [Java](java/practice/) |
-| Huffman树    | [148. 合并果子](https://www.acwing.com/problem/content/150/) |      | [Java](java/practice/) |
-| 排序不等式   | [913. 排队打水](https://www.acwing.com/problem/content/description/915/) |      | [Java](java/practice/) |
-| 绝对值不等式 | [104. 货仓选址](https://www.acwing.com/problem/content/106/) |      | [Java](java/practice/) |
-| 推公式       | [125. 耍杂技的牛](https://www.acwing.com/problem/content/127/) |      | [Java](java/practice/) |
-
+| 区间问题     | [905. 区间选点](https://www.acwing.com/problem/content/907/) | 简单 | [Java](cpp/practice/AcWing%20905.%20区间选点) |
+|              | [908. 最大不相交区间数量](https://www.acwing.com/problem/content/910/) | 简单 | [Java](cpp/practice/AcWing%20908.%20最大不相交区间数量) |
+|              | [906. 区间分组](https://www.acwing.com/problem/content/908/) | 简单 | [Java](cpp/practice/AcWing%20906.%20区间分组) |
+|              | [907. 区间覆盖](https://www.acwing.com/problem/content/909/) | 简单 | [Java](cpp/practice/AcWing%20907.%20区间覆盖) |
+| Huffman树    | [148. 合并果子](https://www.acwing.com/problem/content/150/) | 简单 | [Java](cpp/practice/AcWing%20148.%20合并果子) |
+| 排序不等式   | [913. 排队打水](https://www.acwing.com/problem/content/description/915/) | 简单 | [Java](cpp/practice/AcWing%20913.%20排队打水) |
+| 绝对值不等式 | [104. 货仓选址](https://www.acwing.com/problem/content/106/) | 简单 | [Java](cpp/practice/AcWing%20104.%20货仓选址) |
+| 推公式       | [125. 耍杂技的牛](https://www.acwing.com/problem/content/127/) | 中等 | [Java](cpp/practice/AcWing%20125.%20耍杂技的牛) |

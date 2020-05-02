@@ -26,8 +26,7 @@ int path[N];
 void dfs(int u, int state) {
     if (u == n) {
         for (int i = 0; i < n; i ++ ) cout << path[i] << ' ';
-        puts("");
-
+        cout << endl;
         return;
     }
 
