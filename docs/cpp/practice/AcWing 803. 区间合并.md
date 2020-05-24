@@ -13,42 +13,42 @@
 ```cpp
 #include <bits/stdc++.h>
 
+#define PII pair<int, int>
+#define x first
+#define y second
+
 using namespace std;
 
-typedef pair<int, int> PII;
+int n;
+vector<PII> seqs;
 
-void merge(vector<PII> &segs) {
-    sort(segs.begin(), segs.end());
+void merge(vector<PII> &seqs) {
+    sort(seqs.begin(), seqs.end());
     
     vector<PII> ret;
     int st = -2e9, ed = -2e9;
-    for (auto seg : segs) {
-        if (seg.first > ed) {
-            if (st != -2e9) ret.push_back({st, ed});
-            st = seg.first, ed = seg.second;
+    for (auto seq : seqs) {
+        if (seq.x > ed) {
+            if (st != -1e9) ret.push_back({st, ed});
+            st = seq.x, ed = seq.y;
         } else {
-            ed = max(ed, seg.second);
+            ed = max(ed, seq.y);
         }
     }
     
-    if (st != -2e9) ret.push_back({st, ed});
-    
-    segs = ret;
+    seqs = ret;
 }
 
 int main() {
-    int n;
-    cin >> n;
-    
-    vector<PII> segs;
+    scanf("%d", &n);
     while (n--) {
         int l, r;
         scanf("%d%d", &l, &r);
-        segs.push_back({l, r});
+        seqs.push_back({l, r});
     }
     
-    merge(segs);
-    cout << segs.size() << endl;
+    merge(seqs);
+    cout << seqs.size() << endl;
     
     return 0;
 }

@@ -18,26 +18,33 @@ using namespace std;
 const int N = 100010;
 
 int n, m;
-int a[N], b[N];
+int b[N];
 
-void insert(int l, int r, int c) {
-    b[l] += c, b[r + 1] -= c;
+void insert(int l, int r, int x) {
+    b[l] += x, b[r + 1] -= x;
 }
 
 int main() {
-    cin >> n >> m;
-    for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
-    for (int i = 1; i <= n; i++) insert(i, i, a[i]);  // 差分序列
+    scanf("%d%d", &n, &m);
+    
+    // 构建差分序列
+    for (int i = 1; i <= n; i++) {
+        int x;
+        scanf("%d", &x);
+        insert(i, i, x); 
+    }
     
     // m 次区间加 c 操作
     while (m--) {
-        int l, r, c;
-        scanf("%d%d%d", &l, &r, &c);
-        insert(l, r, c);
+        int l, r, x;
+        scanf("%d%d%d", &l, &r, &x);
+        insert(l, r, x);
     }
     
-    for (int i = 1; i <= n; i++) b[i] += b[i - 1]; // 求 b 的前缀和 
-    for (int i = 1; i <= n; i++) printf("%d ", b[i]);
+    for (int i = 1; i <= n; i++) {
+        b[i] = b[i - 1] + b[i]; // 求差分序列的前缀和
+        printf("%d ", b[i]);
+    }
     
     return 0;
 }

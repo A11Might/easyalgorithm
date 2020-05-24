@@ -18,22 +18,24 @@ using namespace std;
 const int N = 1010;
 
 int n, m, q;
-int a[N][N], b[N][N];
+int b[N][N];
 
-void insert(int x1, int y1, int x2, int y2, int c) {
-    b[x1][y1] += c;
-    b[x2 + 1][y1] -= c;
-    b[x1][y2 + 1] -= c;
-    b[x2 + 1][y2 + 1] += c;
+void insert(int x1, int y1, int x2, int y2, int x) {
+    b[x1][y1] += x;
+    b[x1][y2 + 1] -= x, b[x2 + 1][y1] -= x;
+    b[x2 + 1][y2 + 1] +=x;
 }
 
 int main() {
-    cin >> n >> m >> q;
+    scanf("%d%d%d", &n, &m, &q);
+    
+    // 构建差分矩阵
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= m; j++) {
-            scanf("%d", &a[i][j]);
-            insert(i, j, i, j, a[i][j]); // 差分矩阵
-        } 
+            int x;
+            scanf("%d", &x);
+            insert(i, j, i, j, x);
+        }
     }
     
     // q 次子矩阵加 c 操作
@@ -43,10 +45,10 @@ int main() {
         insert(x1, y1, x2, y2, c);
     }
     
-    // 求 b 的二维前缀和 
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= m; j++) {
-            b[i][j] += b[i - 1][j] + b[i][j - 1] - b[i - 1][j - 1];
+            // 求差分矩阵的二维前缀和 
+            b[i][j] = b[i - 1][j] + b[i][j - 1] - b[i - 1][j - 1] + b[i][j];
             printf("%d ", b[i][j]);
         }
         puts("");

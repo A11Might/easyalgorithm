@@ -27,11 +27,11 @@ class Main {
     static int n;
     static int[] nums, tmp;
     
-    static long quickSort(int[] nums, int l, int r) {
+    static long mergeSort(int[] nums, int l, int r) {
         if (l >= r) return 0;
         
         int mid = l + r >> 1;
-        long ret = quickSort(nums, l, mid) + quickSort(nums, mid + 1, r);
+        long ret = mergeSort(nums, l, mid) + mergeSort(nums, mid + 1, r);
         
         int i = l, j = mid + 1, k = l;
         while (i <= mid && j <= r) {
@@ -56,7 +56,7 @@ class Main {
         tmp = new int[n];
         for (int i = 0; i < n; i++) nums[i] = sc.nextInt();
         
-        System.out.println(quickSort(nums, 0, n - 1));
+        System.out.println(mergeSort(nums, 0, n - 1));
     }
 }
 ```
