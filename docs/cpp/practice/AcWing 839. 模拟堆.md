@@ -17,6 +17,7 @@ using namespace std;
 
 const int N = 100010;
 
+int n;
 int h[N], cnt, hp[N], ph[N], idx;
 
 void heap_swap(int a, int b) {
@@ -29,36 +30,34 @@ void down(int u) {
     int t = u;
     if (u * 2 <= cnt && h[u * 2] < h[t]) t = u * 2;
     if (u * 2 + 1 <= cnt && h[u * 2 + 1] < h[t]) t = u * 2 + 1;
-    if (u != t) {
-        heap_swap(u, t);
+    if (t != u) {
+        heap_swap(t, u);
         down(t);
     }
 }
 
 void up(int u) {
-    int t = u;
-    while (u / 2 && h[u] < h[u / 2]) {
-        heap_swap(u, u / 2);
+    while (u / 2 && h[u / 2] > h[u]) {
+        heap_swap(u / 2, u);
         u >>= 1;
     }
 }
 
 int main() {
-    int n;
     cin >> n;
+    
     while (n--) {
         string op;
         int k, x;
         cin >> op;
         if (op == "I") {
             cin >> x;
-            cnt++;
-            idx++;
-            ph[idx] = cnt, hp[cnt] = idx;
-            h[cnt] = x;
+            h[++cnt] = x;
+            hp[cnt] = ++idx, ph[idx] = cnt;
             up(cnt);
-        } else if (op == "PM") cout << h[1] << endl;
-        else if (op == "DM") {
+        } else if (op == "PM") {
+            cout << h[1] << endl;
+        } else if (op == "DM") {
             heap_swap(1, cnt--);
             down(1);
         } else if (op == "D") {
