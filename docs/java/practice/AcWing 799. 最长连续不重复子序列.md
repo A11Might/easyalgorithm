@@ -32,19 +32,20 @@ for (int i = 0; i < n; i++) { // 固定右端点
 ```java
 import java.util.*;
 
-class Main {
+public class Main {
+    private static final int N = 100010;
+    private static int[] q = new int[N], s = new int[N];
+    
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int[] nums = new int[n];
-        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();
+        for (int i = 0; i < n; i++) q[i] = sc.nextInt();
         
         int ret = 0;
-        int[] cnts = new int[100001];
         for (int i = 0, j = 0; i < n; i++) {
-            cnts[nums[i]]++;
+            s[q[i]]++;
             // 维护区间 [j, i] 中没有重复元素
-            while (cnts[nums[i]] > 1) cnts[nums[j++]]--;
+            while (s[q[i]] > 1) s[q[j++]]--;
             ret = Math.max(ret, i - j + 1);
         }
         

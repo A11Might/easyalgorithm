@@ -18,38 +18,34 @@
 ```java
 import java.util.*;
 
-class Main {
-    static int n;
-    static int[] nums, tmp;
+public class Main {
+    private static final int N = 100010;
+    private static int[] q = new int[N], t = new int[N];
     
-    static void mergeSort(int[] nums, int l, int r) {
+    private static void mergeSort(int[] q, int l, int r) {
         if (l >= r) return;
         
         int mid = l + r >> 1;
-        mergeSort(nums, l, mid);
-        mergeSort(nums, mid + 1, r);
+        mergeSort(q, l, mid);
+        mergeSort(q, mid + 1, r);
         
-        int k = l, i = l, j = mid + 1;
+        int i = l, j = mid + 1, k = l;
         while (i <= mid && j <= r) {
-            if (nums[i] <= nums[j]) tmp[k++] = nums[i++];
-            else tmp[k++] = nums[j++];
+            if (q[i] <= q[j]) t[k++] = q[i++];
+            else t[k++] = q[j++];
         }
-        while (i <= mid) tmp[k++] = nums[i++];
-        while (j <= r) tmp[k++] = nums[j++];
+        while (i <= mid) t[k++] = q[i++];
+        while (j <= r) t[k++] = q[j++];
         
-        for (i = l; i <= r; i++) nums[i] = tmp[i];
+        for (i = l; i <= r; i++) q[i] = t[i];
     }
     
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-        nums = new int[n];
-        tmp = new int[n];
-        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();
-        
-        mergeSort(nums, 0, n - 1);
-        
-        for (int i = 0; i < n; i++) System.out.print(nums[i] + " ");
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) q[i] = sc.nextInt();
+        mergeSort(q, 0, n - 1);
+        for (int i = 0; i < n; i++) System.out.print(q[i] + " ");
     }
 }
 ```

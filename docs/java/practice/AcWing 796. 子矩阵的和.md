@@ -13,28 +13,23 @@
 ```java
 import java.util.*;
 
-class Main {
+public class Main {
+    private static final int N = 1010;
+    private static int[][] a = new int[N][N], s = new int[N][N];
+    
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt(), m = sc.nextInt(), q = sc.nextInt();
-        int[][] a = new int[n + 1][m + 1];
+        int n = sc.nextInt(), m = sc.nextInt(), q= sc.nextInt();
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= m; j++) {
                 a[i][j] = sc.nextInt();
-            }
-        }
-        
-        // 也可以直接在 a 矩阵中求前缀和
-        int[][] s = new int[n + 1][m + 1];
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= m; j++) {
-                s[i][j] = s[i - 1][j] + s[i][j - 1] - s[i - 1][j - 1] + a[i][j]; // 二维前缀和的初始化
+                s[i][j] = s[i - 1][j] + s[i][j - 1] - s[i - 1][j - 1] + a[i][j];
             }
         }
         
         while (q-- > 0) {
             int x1 = sc.nextInt(), y1 = sc.nextInt(), x2 = sc.nextInt(), y2 = sc.nextInt();
-            System.out.println(s[x2][y2] - s[x2][y1 - 1] - s[x1 - 1][y2] + s[x1 - 1][y1 - 1]); // 子矩阵和的计算
+            System.out.println(s[x2][y2] - s[x2][y1 - 1] - s[x1 - 1][y2] + s[x1 - 1][y1 - 1]);
         }
     }
 }

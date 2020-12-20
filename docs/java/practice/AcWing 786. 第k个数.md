@@ -24,37 +24,34 @@
 ```java
 import java.util.*;
 
-class Main {
-    static int n, k;
-    static int[] nums;
+public class Main {
+    private static final int N = 100010;
+    private static int[] q = new int[N];
     
-    static int quickSort(int[] nums, int l, int r, int k) {
-        if (l >= r) return nums[l];
+    private static int quickSort(int[] q, int l, int r, int k) {
+        if (l >= r) return q[l];
         
-        int i = l - 1, j = r + 1, x = nums[l + r >> 1];
+        int i = l - 1, j = r + 1, x = q[l + r >> 1];
         while (i < j) {
-            do i++; while (nums[i] < x);
-            do j--; while (nums[j] > x);
+            do i++; while (q[i] < x);
+            do j--; while (q[j] > x);
             if (i < j) {
-                int tmp = nums[j];
-                nums[j] = nums[i];
-                nums[i] = tmp;
+                int t = q[j];
+                q[j] = q[i];
+                q[i] = t;
             }
         }
         
-        int sl = j - l + 1;
-        if (k <= sl) return quickSort(nums, l, j, k);
-        return quickSort(nums, j + 1, r, k - sl);
+        int ls = j - l + 1;
+        if (k <= ls) return quickSort(q, l, j, k);
+        return quickSort(q, j + 1, r, k - ls);
     }
     
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-        k = sc.nextInt();
-        nums = new int[n];
-        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();
-        
-        System.out.println(quickSort(nums, 0, n - 1, k));
+        int n = sc.nextInt(), k = sc.nextInt();
+        for (int i = 0; i < n; i++) q[i] = sc.nextInt();
+        System.out.println(quickSort(q, 0, n - 1, k));
     }
 }
 ```

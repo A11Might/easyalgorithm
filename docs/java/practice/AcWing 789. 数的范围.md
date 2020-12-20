@@ -13,37 +13,38 @@
 ```java
 import java.util.*;
 
-class Main {
-    static int n, q;
-    static int[] nums;
+public class Main {
+    private static final int N = 100010;
+    private static int[] q = new int[N];
     
-    static void main(String[] args) {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-        q = sc.nextInt();
-        nums = new int[n];
-        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();
+        int n = sc.nextInt(), m = sc.nextInt();
+        for (int i = 0; i < n; i++) q[i] = sc.nextInt();
         
-        while (q-- > 0) {
+        while (m-- > 0) {
             int l = 0, r = n - 1, x = sc.nextInt();
             while (l < r) {
                 int mid = l + r >> 1;
-                if (nums[mid] >= x) r = mid;
+                // 寻找相同元素区间的第一个数，
+                // 将区间划分为小于 x 和大于等于 x 两个部分。
+                if (q[mid] >= x) r = mid;
                 else l = mid + 1;
             }
             
-            if (nums[l] != x) System.out.println("-1 -1");
+            if (q[l] != x) System.out.println("-1 -1");
             else {
                 System.out.print(l + " ");
                 l = 0;
                 r = n - 1;
                 while (l < r) {
                     int mid = l + r + 1 >> 1;
-                    if (nums[mid] <= x) l = mid;
+                    // 寻找相同元素区间的最后一个数，
+                    // 将区间分为小于等于 x 和大于 x 的两个部分
+                    if (q[mid] <= x) l = mid;
                     else r = mid - 1;
                 }
-                
-                System.out.println(r);
+                System.out.println(l);
             }
         }
     }

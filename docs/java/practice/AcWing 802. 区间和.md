@@ -20,56 +20,50 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
-class Main {
-    static List<Integer> a;
-
-    static int find(int x) {
-        int l = 0, r = a.size() - 1;
+public class Main {
+    private static final int N = 300010;
+    private static int[] a = new int[N], s = new int[N]; // 存储离散后的数和其前缀和
+    private static List<Integer> alls = new ArrayList<>(); // 存储需要离散的数
+    private static List<int[]> adds = new ArrayList<>(), querys = new ArrayList<>();
+    
+    private static int find(int x) {
+        int l = 0, r = alls.size() - 1;
         while (l < r) {
             int mid = l + r >> 1;
-            if (a.get(mid) >= x) r = mid;
+            if (alls.get(mid) >= x) r = mid;
             else l = mid + 1;
         }
-        return r + 1;
+        
+        return l + 1;
     }
-
+    
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt(), m = sc.nextInt();
-        a = new ArrayList<>(); // 存储需要离散的数
-
-        List<int[]> add = new ArrayList<>(); // 存储加 c 操作
-        for (int i = 0; i < n; i++) {
+        while (n-- > 0) {
             int x = sc.nextInt(), c = sc.nextInt();
-            add.add(new int[] {x, c});
-            a.add(x); // 存储会用到的坐标
+            adds.add(new int[] {x, c});
+            alls.add(x); // 存储会用到的坐标
         }
-
-        List<int[]> query = new ArrayList<>(); // 存储查询操作
-        for (int i = 0; i < m; i++) {
+        while (m-- > 0) {
             int l = sc.nextInt(), r = sc.nextInt();
-            query.add(new int[] {l, r});
-            a.add(l); // 存储会用到的坐标
-            a.add(r); // 存储会用到的坐标
+            querys.add(new int[] {l, r});
+            alls.add(l); // 存储会用到的坐标
+            alls.add(r); // 存储会用到的坐标
         }
-
-        // 离散
-        a = a.stream().sorted().distinct().collect(Collectors.toList());
-
-        // 处理加 c 操作
-        int[] b = new int[a.size() + 1]; // 存储离散后的数
-        for (int[] arr : add) {
-            int x = find(arr[0]);
-            b[x] += arr[1];
+        
+        // 离散化
+        alls = alls.stream().sorted().distinct().collect(Collectors.toList());
+        // 处理 + c 操作
+        for (var add : adds) {
+            int x = find(add[0]);
+            a[x] += add[1];
         }
-
-        // 预处理前缀和
-        int[] s = new int[a.size() + 1];
-        for (int i = 1; i <= a.size(); i++) s[i] = s[i - 1] + b[i];
-
-        // 处理询问
-        for (int[] arr : query) {
-            int l = find(arr[0]), r = find(arr[1]);
+        // 处理 a 的前缀和
+        for (int i = 1; i <= alls.size(); i++) s[i] = s[i - 1] + a[i];
+        
+        for (var query : querys) {
+            int l = find(query[0]), r = find(query[1]);
             System.out.println(s[r] - s[l - 1]);
         }
     }

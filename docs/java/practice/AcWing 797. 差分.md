@@ -13,10 +13,11 @@
 ```java
 import java.util.*;
 
-class Main {
-    static int[] b;
+public class Main {
+    private static final int N = 100010;
+    private static int[] a = new int[N], b = new int[N];
     
-    static void insert(int l, int r, int c) {
+    private static void insert(int l, int r, int c) {
         b[l] += c;
         b[r + 1] -= c;
     }
@@ -24,20 +25,17 @@ class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt(), m = sc.nextInt();
-        int[] a = new int[n + 1];
-        for (int i = 1; i <= n; i++) a[i] = sc.nextInt();
+        for (int i = 1; i <= n; i++) {
+            a[i] = sc.nextInt();
+            insert(i, i, a[i]); // 构建差分序列
+        }
         
-        // 差分序列
-        b = new int[n + 2];
-        for (int i = 1; i <= n; i++) insert(i, i, a[i]);
-        
-        // m 次区间加 c 操作
         while (m-- > 0) {
             int l = sc.nextInt(), r = sc.nextInt(), c = sc.nextInt();
             insert(l, r, c);
         }
         
-        // 求 b 的前缀和 
+        // 求差分序列 b 的前缀和 a
         for (int i = 1; i <= n; i++) {
             a[i] = a[i - 1] + b[i];
             System.out.print(a[i] + " ");

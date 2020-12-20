@@ -13,8 +13,8 @@ O(n)，n 为数字 A 的长度。
 ```java
 import java.util.*;
 
-class Main {
-    static int div(List<Integer> A, int b, List<Integer> C) {
+public class Main {
+    private static int div(List<Integer> A, int b, List<Integer> C) {
         int t = 0; // 余数
         for (int i = A.size() - 1; i >= 0; i--) {
             t = t * 10 + A.get(i);
@@ -23,23 +23,22 @@ class Main {
         }
         
         // 去除前导 0
-        while (C.size() > 1 && C.get(0) == 0) C.remove(0);
+        Collections.reverse(C);
+        while (C.size() > 1 && C.get(C.size() - 1) == 0) C.remove(C.size() - 1);
         return t; // 返回余数
     }
     
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String a = sc.nextLine();
+        int b = sc.nextInt();
         List<Integer> A = new ArrayList<>();
         for (int i = a.length() - 1; i >= 0; i--) A.add(a.charAt(i) - '0');
-        int b = sc.nextInt();
         
         List<Integer> C = new ArrayList<>();
         int remainder = div(A, b, C);
-        // 除法是从高位向低位计算的
-        for (int i = 0; i < C.size(); i++) System.out.print(C.get(i));
-        System.out.println();
-        System.out.print(remaind);
+        for (int i = C.size() - 1; i >= 0; i--) System.out.print(C.get(i));
+        System.out.printf("\n%d", remainder);
     }
 }
 ```

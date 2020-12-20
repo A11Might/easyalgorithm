@@ -18,36 +18,34 @@
 ```java
 import java.util.*;
 
-class Main {
-    static int n;
-    static int[] nums;
+public class Main {
+    private static final int N = 100010;
+    private static int[] q = new int[N];
     
-    static void quickSort(int[] nums, int l, int r) {
-        if (l == r) return;
+    private static void quickSort(int[] q, int l, int r) {
+        if (l >= r) return;
         
-        int i = l - 1, j = r + 1, x = nums[(l + r) >> 1];
+        int i = l - 1, j = r + 1, x = q[l + r >> 1];
         while (i < j) {
-            do i++; while (nums[i] < x);
-            do j--; while (nums[j] > x);
+            do i++; while (q[i] < x);
+            do j--; while (q[j] > x);
             if (i < j) {
-                int tmp = nums[j];
-                nums[j] = nums[i];
-                nums[i] = tmp;
+                int t = q[j];
+                q[j] = q[i];
+                q[i] = t;
             }
         }
         
-        quickSort(nums, l, j);
-        quickSort(nums, j + 1, r);
+        quickSort(q, l, j);
+        quickSort(q, j + 1, r);
     }
     
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-        nums = new int[n];
-        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();
-        quickSort(nums, 0, n - 1);
-        
-        for (int i = 0; i < n; i++) System.out.print(nums[i] + " ");
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) q[i] = sc.nextInt();
+        quickSort(q, 0, n - 1);
+        for (int i = 0; i < n; i++) System.out.print(q[i] + " ");
     }
 }
 ```

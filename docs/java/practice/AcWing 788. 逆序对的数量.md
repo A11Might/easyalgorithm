@@ -23,41 +23,39 @@
 ```java
 import java.util.*;
 
-class Main {
-    static int n;
-    static int[] nums, tmp;
+public class Main {
+    private static final int N = 100010;
+    private static int[] q = new int[N], t = new int[N];
     
-    static long mergeSort(int[] nums, int l, int r) {
+    private static long mergeSort(int[] q, int l, int r) {
         if (l >= r) return 0;
         
         int mid = l + r >> 1;
-        long ret = mergeSort(nums, l, mid) + mergeSort(nums, mid + 1, r);
+        long ret = mergeSort(q, l, mid) + mergeSort(q, mid + 1, r);
         
         int i = l, j = mid + 1, k = l;
         while (i <= mid && j <= r) {
-            if (nums[i] <= nums[j]) tmp[k++] = nums[i++];
+            if (q[i] <= q[j]) t[k++] = q[i++];
             else {
+                // 因为当 q[i] > q[j] 时 q[j] 会被取出，
+                // 所以要先统计所有包括 q[j] 的逆序对数量。
                 ret += mid - i + 1;
-                tmp[k++] = nums[j++];
+                t[k++] = q[j++];
             }
         }
-        while (i <= mid) tmp[k++] = nums[i++];
-        while (j <= r) tmp[k++] = nums[j++];
+        while (i <= mid) t[k++] = q[i++];
+        while (j <= r) t[k++] = q[j++];
         
-        for (i = l; i <= r; i++) nums[i] = tmp[i];
+        for (i = l; i <= r; i++) q[i] = t[i];
         
         return ret;
     }
     
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-        nums = new int[n];
-        tmp = new int[n];
-        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();
-        
-        System.out.println(mergeSort(nums, 0, n - 1));
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) q[i] = sc.nextInt();
+        System.out.println(mergeSort(q, 0, n - 1));
     }
 }
 ```
-

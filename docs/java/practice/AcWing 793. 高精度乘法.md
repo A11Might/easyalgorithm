@@ -13,8 +13,8 @@ O(n)，n 为数字 A 的长度。
 ```java
 import java.util.*;
 
-class Main {
-    static List<Integer> mul(List<Integer> A, int b) {
+public class Main {
+    private static List<Integer> mul(List<Integer> A, int b) {
         List<Integer> C = new ArrayList<>();
         
         int t = 0; // 进位
@@ -30,14 +30,16 @@ class Main {
     
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String a = sc.nextLine();
+        String a = sc.next();
+        int b = sc.nextInt();
         List<Integer> A = new ArrayList<>();
         for (int i = a.length() - 1; i >= 0; i--) A.add(a.charAt(i) - '0');
-        int b = sc.nextInt();
         
-        List<Integer> C = mul(A, b);
-        
-        for (int i = C.size() - 1; i >= 0; i--) System.out.print(C.get(i));
+        if (b == 0) System.out.println("0");
+        else {
+            var C = mul(A, b);
+            for (int i = C.size() - 1; i >= 0; i--) System.out.print(C.get(i));
+        }
     }
 }
 ```

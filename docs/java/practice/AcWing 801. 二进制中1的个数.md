@@ -15,17 +15,18 @@
 ```java
 import java.util.*;
 
-class Main {
+public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
+        
         while (n-- > 0) {
-            int x = sc.nextInt(), cnt = 0;
+            int x = sc.nextInt(), s = 0;
             while (x != 0) {
+                s++;
                 x -= x & -x;
-                cnt++;
             }
-            System.out.print(cnt + " ");
+            System.out.print(s + " ");
         }
     }
 }

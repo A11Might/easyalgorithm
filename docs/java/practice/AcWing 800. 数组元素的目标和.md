@@ -17,13 +17,14 @@
 ```java
 import java.util.*;
 
-class Main {
+public class Main {
+    private static final int N = 100010;
+    private static int[] a = new int[N], b = new int[N];
+    
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt(), m = sc.nextInt(), x = sc.nextInt();
-        int[] a = new int[n];
         for (int i = 0; i < n; i++) a[i] = sc.nextInt();
-        int[] b = new int[m];
         for (int i = 0; i < m; i++) b[i] = sc.nextInt();
         
         for (int i = 0, j = m - 1; i < n; i++) {
