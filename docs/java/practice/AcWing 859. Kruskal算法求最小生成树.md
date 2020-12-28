@@ -16,33 +16,8 @@ import java.util.*;
 class Main {
     static final int N = 100010, M = 2 * N;
     static int n, m;
-    static Edge[] edges = new Edge[M];
+    static Edge[] g = new Edge[M];
     static int[] p = new int[N];
-
-    static int kruskal() {
-        Arrays.sort(edges, 0, m, (o1, o2) -> o1.w - o2.w);
-        for (int i = 0; i < n; i++) p[i] = i;
-
-        int ret = 0, cnt = 0;
-        for (int i = 0; i < m; i++) {
-            int u = edges[i].u, v = edges[i].v, w = edges[i].w;
-            u = find(u);
-            v = find(v);
-            if (u != v) {
-                p[u] = v;
-                ret += w;
-                cnt++;
-            }
-        }
-
-        if (cnt < n - 1) return -1;
-        else return ret;
-    }
-
-    static int find(int x) {
-        if (p[x] != x) p[x] = find(p[x]);
-        return p[x];
-    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -50,22 +25,49 @@ class Main {
         m = sc.nextInt();
 
         for (int i = 0; i < m; i++) {
-            int u = sc.nextInt(), v = sc.nextInt(), w = sc.nextInt();
-            edges[i] = new Edge(u, v, w);
+            int a = sc.nextInt(), b = sc.nextInt(), w = sc.nextInt();
+            g[i] = new Edge(a, b, w);
         }
 
         int ret = kruskal();
         if (ret == -1) System.out.println("impossible");
         else System.out.println(ret);
     }
+
+    static int kruskal() {
+        Arrays.sort(g, 0, m, (o1, o2) -> o1.w - o2.w);
+
+        for (int i = 1; i <= n; i++) p[i] = i;
+
+        int ret = 0, cnt = 0;
+        for (int i = 0; i < m; i++) {
+            Edge e = g[i];
+            int a = e.a, b = e.b, w = e.w;
+            a = find(a);
+            b = find(b);
+            if (a != b) {
+                p[a] = b;
+                ret += w;
+                cnt++;
+            }
+        }
+
+        if (cnt < n - 1) return -1;
+        return ret;
+    }
+
+    static int find(int x) {
+        if (p[x] != x) p[x] = find(p[x]);
+        return p[x];
+    }
 }
 
 class Edge {
-    int u, v, w;
+    int a, b, w;
 
-    public Edge(int u, int v, int w) {
-        this.u = u;
-        this.v = v;
+    public Edge(int a, int b, int w) {
+        this.a = a;
+        this.b = b;
         this.w = w;
     }
 }

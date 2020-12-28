@@ -16,50 +16,48 @@
 import java.util.*;
 
 class Main {
-    static final int N = 510;
+    static final int N = 510, M = 100010, INF = 0x3f3f3f3f;
     static int n, m;
     static int[][] g = new int[N][N];
     static int[] dist = new int[N];
     static boolean[] st = new boolean[N];
-    
-    static int dijk() {
-        Arrays.fill(dist, 0x3f3f3f3f);
-        dist[1] = 0;
-        
-        for (int i = 0; i < n - 1; i++) {
-            int t = -1;
-            for (int j = 1; j <= n; j++) {
-                if (!st[j] && (t == -1 || dist[j] < dist[t])) t = j;
-            }
-            
-            for (int j = 1; j <= n; j++) {
-                // 边权全部初始化为Integer.MAX_VALUE时
-                // 边权等于 Integer.MAX_VALUE 时，表示没有边 t -> j
-                // if (g[t][j] == Integer.MAX_VALUE) continue;
-                dist[j] = Math.min(dist[j], dist[t] + g[t][j]);
-            }
-            
-            st[t] = true;
-        }
-        
-        if (dist[n] == 0x3f3f3f3f) return -1;
-        return dist[n];
-    }
-    
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
         m = sc.nextInt();
-        
+
         // 自环：边权为正，对最短路没有影响
         // 重边：只保留边权最小的一个重边
-        for (var arr : g) Arrays.fill(arr, 0x3f3f3f3f);
-        for (int i = 0; i < m; i++) {
-            int x = sc.nextInt(), y = sc.nextInt(), z = sc.nextInt();
-            g[x][y] = Math.min(g[x][y], z);
+        for (var col : g) Arrays.fill(col, INF);
+        while (m-- > 0) {
+            int a = sc.nextInt(), b = sc.nextInt(), w = sc.nextInt();
+            g[a][b] = Math.min(g[a][b], w);
         }
-        
-        System.out.println(dijk());
+
+        System.out.println(dijkstra());
+    }
+
+    static int dijkstra() {
+        Arrays.fill(dist, INF);
+        dist[1] = 0;
+
+        for (int i = 0; i < n - 1; i++) {
+            int t = -1;
+            for (int j = 1; j <= n; j++) {
+                if (!st[j] && (t == -1 || dist[t] > dist[j])) t = j;
+            }
+            st[t] = true;
+
+            for (int j = 1; j <= n; j++) {
+                // 边权等于 INF 时，表示没有边 t -> j
+                // if (g[t][j] == INF) continue;
+                dist[j] = Math.min(dist[j], dist[t] + g[t][j]);
+            }
+        }
+
+        if (dist[n] == INF) return -1;
+        return dist[n];
     }
 }
 ```

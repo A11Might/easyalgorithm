@@ -20,6 +20,22 @@ class Main {
     static int[] dist = new int[N];
     static boolean[] st = new boolean[N];
 
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
+        m = sc.nextInt();
+
+        for (var col : g) Arrays.fill(col, INF);
+        while (m-- > 0) {
+            int a = sc.nextInt(), b = sc.nextInt(), w = sc.nextInt();
+            g[a][b] = g[b][a] = Math.min(g[a][b], w); // 去重边
+        }
+
+        int ret = prim();
+        if (ret == INF) System.out.println("impossible");
+        else System.out.println(ret);
+    }
+
     static int prim() {
         Arrays.fill(dist, INF);
 
@@ -27,34 +43,18 @@ class Main {
         for (int i = 0; i < n; i++) {
             int t = -1;
             for (int j = 1; j <= n; j++) {
-                if (!st[j] && (t == -1 || dist[j] < dist[t])) t = j;
+                if (!st[j] && (t == -1 || dist[t] > dist[j])) t = j;
             }
 
             if (i != 0 && dist[t] == INF) return INF;
+
             if (i != 0) ret += dist[t];
             st[t] = true;
 
             for (int j = 1; j <= n; j++) dist[j] = Math.min(dist[j], g[j][t]);
         }
-
+        
         return ret;
-    }
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-        m = sc.nextInt();
-
-        for (var arr : g) Arrays.fill(arr, INF);
-        while (m-- > 0) {
-            int u = sc.nextInt(), v = sc.nextInt(), w = sc.nextInt();
-            g[u][v] = g[v][u] = Math.min(g[u][v], w);
-        }
-
-        int ret = prim();
-        if (ret == 0x3f3f3f3f) System.out.println("impossible");
-        else System.out.println(ret);
-
     }
 }
 ```

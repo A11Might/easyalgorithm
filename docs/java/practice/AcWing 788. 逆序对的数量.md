@@ -23,11 +23,18 @@
 ```java
 import java.util.*;
 
-public class Main {
-    private static final int N = 100010;
-    private static int[] q = new int[N], t = new int[N];
+class Main {
+    static final int N = 100010;
+    static int[] q = new int[N], t = new int[N];
     
-    private static long mergeSort(int[] q, int l, int r) {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) q[i] = sc.nextInt();
+        System.out.println(mergeSort(q, 0, n - 1));
+    }
+    
+    static long mergeSort(int[] q, int l, int r) {
         if (l >= r) return 0;
         
         int mid = l + r >> 1;
@@ -49,13 +56,6 @@ public class Main {
         for (i = l; i <= r; i++) q[i] = t[i];
         
         return ret;
-    }
-    
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        for (int i = 0; i < n; i++) q[i] = sc.nextInt();
-        System.out.println(mergeSort(q, 0, n - 1));
     }
 }
 ```

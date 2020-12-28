@@ -14,16 +14,9 @@
 import java.util.*;
 import java.io.*;
 
-public class Main {
-    private static final int N = 1010;
-    private static int[][] a = new int[N][N], b = new int[N][N];
-    
-    private static void insert(int x1, int y1, int x2, int y2, int c) {
-        b[x1][y1] += c;
-        b[x2 + 1][y1] -= c;
-        b[x1][y2 + 1] -= c;
-        b[x2 + 1][y2 + 1] += c;
-    }
+class Main {
+    static final int N = 1010;
+    static int[][] a = new int[N][N], b = new int[N][N];
     
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
@@ -52,6 +45,13 @@ public class Main {
         
         // 使用 BufferedWriter 打印，直接使用 System.out 会超时
         out.flush();
+    }
+    
+    static void insert(int x1, int y1, int x2, int y2, int c) {
+        b[x1][y1] += c;
+        b[x2 + 1][y1] -= c;
+        b[x1][y2 + 1] -= c;
+        b[x2 + 1][y2 + 1] += c;
     }
 }
 ```

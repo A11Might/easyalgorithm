@@ -18,11 +18,19 @@
 ```java
 import java.util.*;
 
-public class Main {
-    private static final int N = 100010;
-    private static int[] q = new int[N];
+class Main {
+    static final int N = 100010;
+    static int[] q = new int[N];
     
-    private static void quickSort(int[] q, int l, int r) {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) q[i] = sc.nextInt();
+        quickSort(q, 0, n - 1);
+        for (int i = 0; i < n; i++) System.out.print(q[i] + " ");
+    }
+    
+    static void quickSort(int[] q, int l, int r) {
         if (l >= r) return;
         
         int i = l - 1, j = r + 1, x = q[l + r >> 1];
@@ -38,14 +46,6 @@ public class Main {
         
         quickSort(q, l, j);
         quickSort(q, j + 1, r);
-    }
-    
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        for (int i = 0; i < n; i++) q[i] = sc.nextInt();
-        quickSort(q, 0, n - 1);
-        for (int i = 0; i < n; i++) System.out.print(q[i] + " ");
     }
 }
 ```

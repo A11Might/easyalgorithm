@@ -13,45 +13,12 @@
 ```java
 import java.util.*;
 
-class Main{
-    static final int N = 150010;
-    static int n, m, idx;
-    static int[] h = new int[N], w = new int[N], e = new int[N], ne = new int[N];
+class Main {
+    static final int N = 150010, INF = 0x3f3f3f3f;
+    static int n, m;
+    static int h[] = new int[N], e[] = new int[N], ne[] = new int[N], w[] = new int[N], idx;
     static int[] dist = new int[N];
     static boolean[] st = new boolean[N];
-
-    static void add(int x, int y, int z) {
-        e[idx] = y;
-        w[idx] = z;
-        ne[idx] = h[x];
-        h[x] = idx++;
-    }
-
-    static int dijk() {
-        Arrays.fill(dist, 0x3f3f3f3f);
-        dist[1] = 0;
-        PriorityQueue<int[]> heap = new PriorityQueue<>((o1, o2) -> o1[0] - o2[0]);
-        heap.add(new int[] {dist[1], 1});
-        while (!heap.isEmpty()) {
-            var t = heap.poll();
-
-            int ver = t[1], distance = t[0];
-
-            if (st[ver]) continue;
-            st[ver] = true;
-
-            for (int i = h[ver]; i != -1; i = ne[i]) {
-                int j = e[i];
-                if (dist[j] > distance + w[i]) {
-                    dist[j] = distance + w[i];
-                    heap.add(new int[] {dist[j], j});
-                }
-            }
-        }
-
-        if (dist[n] == 0x3f3f3f3f) return -1;
-        return dist[n];
-    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -60,11 +27,44 @@ class Main{
 
         Arrays.fill(h, -1);
         while (m-- > 0) {
-            int x = sc.nextInt(), y = sc.nextInt(), z = sc.nextInt();
-            add(x, y, z);
+            int a = sc.nextInt(), b = sc.nextInt(), c = sc.nextInt();
+            add(a, b, c);
         }
 
-        System.out.println(dijk());
+        System.out.println(dijkstra());
+    }
+
+    static void add(int a, int b, int c) {
+        e[idx] = b;
+        w[idx] = c;
+        ne[idx] = h[a];
+        h[a] = idx++;
+    }
+
+    static int dijkstra() {
+        Arrays.fill(dist, INF);
+        dist[1] = 0;
+
+        PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> o1[0] - o2[0]); // [distance, index]
+        pq.offer(new int[] {0, 1});
+        while (!pq.isEmpty()) {
+            var p = pq.poll();
+            int u = p[1], d = p[0];
+
+            if (st[u]) continue; // 当前点是冗余数据
+            st[u] = true;
+
+            for (int i = h[u]; i != -1; i = ne[i]) {
+                int j = e[i];
+                if (dist[j] > d + w[i]) {
+                    dist[j] = d + w[i];
+                    pq.offer(new int[] {dist[j], j});
+                }
+            }
+        }
+
+        if (dist[n] == INF) return -1;
+        return dist[n];
     }
 }
 ```

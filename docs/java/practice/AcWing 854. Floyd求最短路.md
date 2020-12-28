@@ -18,27 +18,16 @@ class Main {
     static int n, m, k;
     static int[][] d = new int[N][N];
 
-    static void floyd() {
-        for (int k = 1; k <= n; k++) {
-            for (int i = 1; i <= n; i++) {
-                for (int j = 1; j <= n; j++) {
-                    d[i][j] = Math.min(d[i][j], d[i][k] + d[k][j]);
-                }
-            }
-        }
-    }
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
         m = sc.nextInt();
         k = sc.nextInt();
 
-        // 去掉重边和自环
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {
-                if (i == j) d[i][j] = 0;
-                else d[i][j] = 0x3f3f3f3f;
+                if (i == j) d[i][j] = 0; // 去自环
+                else d[i][j] = 0x3f3f3f3f; // 去重边
             }
         }
 
@@ -54,6 +43,16 @@ class Main {
             int ret = d[x][y];
             if (ret > 0x3f3f3f3f / 2) System.out.println("impossible");
             else System.out.println(ret);
+        }
+    }
+
+    static void floyd() {
+        for (int k = 1; k <= n; k++) {
+            for (int i = 1; i <= n; i++) {
+                for (int j = 1; j <= n; j++) {
+                    d[i][j] = Math.min(d[i][j], d[i][k] + d[k][j]);
+                }
+            }
         }
     }
 }

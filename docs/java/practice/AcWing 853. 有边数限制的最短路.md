@@ -13,22 +13,27 @@
 ```java
 import java.util.*;
 
-class Edge {
-    int a, b, w;
-
-    Edge(int a, int b, int w) {
-        this.a = a;
-        this.b = b;
-        this.w = w;
-    }
-}
-
 class Main {
     static final int N = 510, M = 10010;
     static int n, m, k;
+    static Edge[] edge = new Edge[M]; // 使用 Bellman-Ford 算法可以随意存边，只要能遍历所有边即可
     static int[] dist = new int[N];
-    // 使用 Bellman-Ford 算法可以随意存边，只要能遍历所有边即可
-    static Edge[] edge = new Edge[M];
+
+    public static void main(String[] argsd) {
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
+        m = sc.nextInt();
+        k = sc.nextInt();
+
+        for (int i = 0; i < m; i++) {
+            int a = sc.nextInt(), b = sc.nextInt(), w = sc.nextInt();
+            edge[i] = new Edge(a, b, w);
+        }
+
+        int ret = bellmanFord();
+        if(ret ==-1) System.out.println("impossible");
+        else System.out.println(ret);
+    }
 
     static int bellmanFord() {
         Arrays.fill(dist, 0x3f3f3f3f);
@@ -49,21 +54,15 @@ class Main {
         if (dist[n] > 0x3f3f3f3f / 2) return -1;
         return dist[n];
     }
+}
 
-    public static void main(String[] argsd) {
-        Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-        m = sc.nextInt();
-        k = sc.nextInt();
+class Edge {
+    int a, b, w;
 
-        for (int i = 0; i < m; i++) {
-            int a = sc.nextInt(), b = sc.nextInt(), w = sc.nextInt();
-            edge[i] = new Edge(a, b, w);
-        }
-
-        int ret = bellmanFord();
-        if(ret ==-1)System.out.println("impossible");
-        else System.out.println(ret);
+    public Edge(int a, int b, int w) {
+        this.a = a;
+        this.b = b;
+        this.w = w;
     }
 }
 ```

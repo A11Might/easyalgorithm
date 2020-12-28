@@ -13,9 +13,9 @@
 ```java
 import java.util.*;
 
-public class Main {
-    private static final int N = 100010;
-    private static int[] a = new int[N], s = new int[N];
+class Main {
+    static final int N = 100010;
+    static int[] a = new int[N], s = new int[N];
     
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

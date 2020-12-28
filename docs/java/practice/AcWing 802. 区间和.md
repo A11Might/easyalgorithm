@@ -20,22 +20,11 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Main {
-    private static final int N = 300010;
-    private static int[] a = new int[N], s = new int[N]; // 存储离散后的数和其前缀和
-    private static List<Integer> alls = new ArrayList<>(); // 存储需要离散的数
-    private static List<int[]> adds = new ArrayList<>(), querys = new ArrayList<>();
-    
-    private static int find(int x) {
-        int l = 0, r = alls.size() - 1;
-        while (l < r) {
-            int mid = l + r >> 1;
-            if (alls.get(mid) >= x) r = mid;
-            else l = mid + 1;
-        }
-        
-        return l + 1;
-    }
+class Main {
+    static final int N = 300010;
+    static int[] a = new int[N], s = new int[N]; // 存储离散后的数和其前缀和
+    static List<Integer> alls = new ArrayList<>(); // 存储需要离散的数
+    static List<int[]> adds = new ArrayList<>(), querys = new ArrayList<>();
     
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -66,6 +55,17 @@ public class Main {
             int l = find(query[0]), r = find(query[1]);
             System.out.println(s[r] - s[l - 1]);
         }
+    }
+    
+    static int find(int x) {
+        int l = 0, r = alls.size() - 1;
+        while (l < r) {
+            int mid = l + r >> 1;
+            if (alls.get(mid) >= x) r = mid;
+            else l = mid + 1;
+        }
+        
+        return l + 1;
     }
 }
 ```

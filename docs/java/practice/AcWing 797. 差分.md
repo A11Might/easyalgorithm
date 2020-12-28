@@ -13,14 +13,9 @@
 ```java
 import java.util.*;
 
-public class Main {
-    private static final int N = 100010;
-    private static int[] a = new int[N], b = new int[N];
-    
-    private static void insert(int l, int r, int c) {
-        b[l] += c;
-        b[r + 1] -= c;
-    }
+class Main {
+    static final int N = 100010;
+    static int[] a = new int[N], b = new int[N];
     
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -40,6 +35,11 @@ public class Main {
             a[i] = a[i - 1] + b[i];
             System.out.print(a[i] + " ");
         }
+    }
+    
+    static void insert(int l, int r, int c) {
+        b[l] += c;
+        b[r + 1] -= c;
     }
 }
 ```

@@ -13,8 +13,21 @@
 ```java
 import java.util.*;
 
-public class Main {
-    private static int merge(List<int[]> segs) {
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        List<int[]> segs = new ArrayList<>();
+        while (n-- > 0) {
+            int l = sc.nextInt(), r = sc.nextInt();
+            segs.add(new int[] {l, r});
+        }
+        
+        segs.sort((o1, o2) -> o1[0] - o2[0]);
+        System.out.println(merge(segs));
+    }
+    
+    static int merge(List<int[]> segs) {
         List<int[]> ret = new ArrayList<>();
         
         int st = (int) -2e9, ed = (int) -2e9;
@@ -30,19 +43,6 @@ public class Main {
         if (ed != -2e9) ret.add(new int[] {st, ed});
         
         return ret.size();
-    }
-    
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        List<int[]> segs = new ArrayList<>();
-        while (n-- > 0) {
-            int l = sc.nextInt(), r = sc.nextInt();
-            segs.add(new int[] {l, r});
-        }
-        
-        segs.sort((o1, o2) -> o1[0] - o2[0]);
-        System.out.println(merge(segs));
     }
 }
 ```
