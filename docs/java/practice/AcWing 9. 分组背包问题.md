@@ -6,7 +6,8 @@
 
 **状态表示 - f(i, j)**
 
-- 集合：从前 i 组物品中选，且总体积不大于 j 的所有选法。
+- 集合：从前 i 组物品中选，且总体积不大于 j 的所有选法
+
 - 属性：Max
 
 **状态计算 - 集合划分**
@@ -19,14 +20,16 @@
 
   ...
 
-- 选第 i 组中的第 k 个物品：等价于从前 i - 1 组物品中选，体积不大于 j - v[i] [k] 的所有选法中价值的最大值，再加上第 i 组中的第 k 个物品的价值 w\[i][k]，f(i - 1, j - v\[i][k]]) + w\[i][k]。
+- 选第 i 组中的第 k 个物品：等价于从前 i - 1 组物品中选，体积不大于 j - v[i] [k] 的所有选法中价值的最大值，再加上第 i 组中的第 k 个物品的价值 w\[i][k]：f(i - 1, j - v\[i][k]]) + w\[i][k]。
 
 综上：f(i, j) = max(f(i - 1, j), f(i - 1, j - v\[i][k]]) + w\[i][k])。
 
 **注：**
 
 - 一个都不选的方案在状态优化成1维的时候就可以省略了，因为本层的f[j]就是上一层的 f[j]。
+
 - v\[i][k] 关于 k 并不是递增的，所以当前的 k 不满足要求，并不意味着后面的 k 也不满足要求，不能结束循环，也就是说 if (v\[i][k] <= j) 不能放到 for 循环中，来判断结束循环，同理 j 也需要遍历到 0 才能停止。
+
 - 在简化状态表示之前，f\[i][j] 需要从 f\[i - 1][j] 转移过来，如果从小到大循环 j，那么在我们计算 f[j] 之前，会先计算 f[j - v\[i][k]]，那么此时的 f\[j - v\[i][k]] 就是 f\[i][j - v\[i][k]] 了。
 
 #### 时间复杂度分析：
@@ -41,8 +44,7 @@ import java.util.*;
 class Main {
     static final int N = 110;
     static int n, m;
-    static int[][] v = new int[N][N], w = new int[N][N];
-    static int[] s = new int[N];
+    static int v[][] = new int[N][N], w[][] = new int[N][N], s[] = new int[N];
     static int[] f = new int[N];
     
     public static void main(String[] args) {

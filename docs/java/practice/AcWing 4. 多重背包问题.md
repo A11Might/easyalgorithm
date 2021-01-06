@@ -6,7 +6,8 @@
 
 **状态表示 - f(i, j)**
 
-- 集合：从前 i 个物品中选，且总体积不大于 j 的所有选法。
+- 集合：从前 i 个物品中选，且总体积不大于 j 的所有选法
+
 - 属性：Max
 
 **状态计算 - 集合划分**
@@ -49,7 +50,7 @@ class Main {
         }
         
         for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= m; j++) {
+            for (int j = 0; j <= m; j++) {
                 for (int k = 0; k <= s[i] && j - k * v[i] >= 0; k++) {
                     f[i][j] = Math.max(f[i][j], f[i - 1][j - k * v[i]] + k * w[i]);
                 }

@@ -6,17 +6,19 @@
 
 **状态表示 - f(i, j)**
 
-- 集合：所有从起点走到 (i, j) 的路径。
+- 集合：所有从起点走到 (i, j) 的路径
+
 - 属性：Max
 
 **状态计算 - 集合划分**
 
 通过路径方向将 f(i, j) 表示的集合划分为：
 
-- 来自左上方：f(i - 1, j - 1) + a[i, j]。
-- 来自右上方：f(i - 1, j) + a[i, j]。
+- 来自左上方：f(i - 1, j - 1) + a[i, j]
 
-![ac898](5-1.png)
+- 来自右上方：f(i - 1, j) + a[i, j]
+
+![ac898](../../assets/0898.png)
 
 综上：f(i, j) = max(f(i - 1, j - 1) + a[i, j], f(i - 1, j) + a[i, j])。
 
@@ -32,7 +34,7 @@
 import java.util.*;
 
 class Main {
-    static final int N = 510;
+    static final int N = 510, INF = (int)1e9;
     static int n;
     static int[][] h = new int[N][N];
     static int[][] f = new int[N][N];
@@ -46,7 +48,8 @@ class Main {
             }
         }
         
-        for (var arr : f) Arrays.fill(arr, Integer.MIN_VALUE);
+        for (var col : f) Arrays.fill(col, -INF);
+        
         f[1][1] = h[1][1];
         for (int i = 2; i <= n; i++) {
             for (int j = 1; j <= i; j++) {
@@ -54,7 +57,7 @@ class Main {
             }
         }
         
-        int ret = Integer.MIN_VALUE;
+        int ret = -INF;
         for (int i = 1; i <= n; i++) ret = Math.max(ret, f[n][i]);
         System.out.println(ret);
     }

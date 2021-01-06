@@ -26,11 +26,29 @@ import java.util.*;
 
 class Main {
     static final int N = 100010, M = 2 * N;
-    static int n, idx, ret = N;
+    static int n, ret = N;
     // 因为是无向图，所有给定的边都需要建立两条方向不同的边。
-    static int[] h = new int[N], e = new int[M], ne = new int[M];
+    static int[] h = new int[N], e = new int[M], ne = new int[M], idx;
     static boolean[] st = new boolean[N];
 
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
+
+        Arrays.fill(h, -1);
+        // 注意是 n - 1 行数据
+        for (int i = 0; i < n - 1; i++) {
+            int a = sc.nextInt(), b = sc.nextInt();
+            // 无向图存储两条有向边
+            add(a, b);
+            add(b, a);
+        }
+
+        // 因为每条边都是无向边，所以以哪个点开始都是一样的
+        dfs(1);
+        System.out.println(ret);
+    }
+    
     static void add(int a, int b) {
         e[idx] = b;
         ne[idx] = h[a];
@@ -57,24 +75,6 @@ class Main {
         ret = Math.min(ret, ans);
 
         return sum;
-    }
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-
-        Arrays.fill(h, -1);
-        // 注意是 n - 1 行数据
-        for (int i = 0; i < n - 1; i++) {
-            int a = sc.nextInt(), b = sc.nextInt();
-            // 无向图存储两条有向边
-            add(a, b);
-            add(b, a);
-        }
-
-        // 因为每条边都是无向边，所以以哪个点开始都是一样的
-        dfs(1);
-        System.out.println(ret);
     }
 }
 ```

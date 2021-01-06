@@ -17,9 +17,26 @@ import java.util.*;
 
 class Main {
     static final int N = 100010;
-    static int n, m, idx;
-    static int[] h = new int[N], e = new int[N], ne = new int[N];
+    static int n, m;
+    static int[] h = new int[N], e = new int[N], ne = new int[N], idx;
     static int[] q = new int[N], d = new int[N]; // 数组 d 记录每个节点距离 1 号点的距离
+    
+    
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
+        m = sc.nextInt();
+        
+        Arrays.fill(h, -1);
+        for (int i = 0; i < m; i++) {
+            int a = sc.nextInt(), b = sc.nextInt();
+            add(a, b);
+        }
+        
+        bfs();
+        System.out.println(d[n]);
+    }
     
     static void add(int a, int b) {
         e[idx] = b;
@@ -42,22 +59,6 @@ class Main {
                 q[++tt] = j;
             }
         }
-        
-        System.out.println(d[n]);
-    }
-    
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-        m = sc.nextInt();
-        
-        Arrays.fill(h, -1);
-        for (int i = 0; i < m; i++) {
-            int a = sc.nextInt(), b = sc.nextInt();
-            add(a, b);
-        }
-        
-        bfs();
     }
 }
 ```

@@ -2,7 +2,7 @@
 
 #### 算法
 
-*#DP#数为统计类DP*
+*#DP#数位统计类DP*
 
 **简化问题**
 
@@ -10,20 +10,24 @@
 
 **分情况讨论**
 
-假设我们计算的是 [1, n] 中 1 出现的次数，分别求出 1 在每一位上出现的次数，n 使用 abcdefg 表示。
+计算 [1, n] 中 1 出现的次数时，我们可以分别求出 1 在每一位上出现的次数，然后累加来求，其中 n 使用 abcdefg 表示。
 
-求 1 在第 4 为上出现的次数，1 <= xxx1yyy <= abcdefg：
+以求 1 在第 4 为上出现的次数为例，1 <= xxx1yyy <= abcdefg：
 
 - 当 xxx 取 [000, abc - 1] 时，yyy 可以取到 [000, 999]，所以 1 出现次数为 abc * 1000。
+
 - 当 xxx 取 abc 时 
+
   - 如果 d < 1 的话，abc1yyy > abc0efg，所以 1 出现次数为 0。
+  
   - 如果 d = 1 的话，yyy 可以取到 [000, efg]，所以 1 出现次数为 efg + 1。
+  
   - 如果 d > 1 的话，yyy 可以取到 [000, 999]，所以 1 出现次数为 1000。
 
 **边界情况：**
 
 - 当数字 x 出现在第一位时，就没有第一种情况。
-- 当数字 x 是 0 时，会存在前导0，也就是第一种情况不能取 000，xxx 只能取 1 ~ abc - 1。
+- 当数字 x 是 0 时，在第一种情况中可能取 000，导致出现前导 0，所以 xxx 只能取 1 ~ abc - 1。
 
 #### 时间复杂度分析：
 
@@ -38,16 +42,26 @@ class Main {
     static final int N = 10;
     static int a, b;
     
-    static int get(List<Integer> num, int l, int r) {
-        int ans = 0;
-        for (int i = r; i >= l; i--) ans = ans * 10 + num.get(i);
-        return ans;
-    }
-    
-    static int power10(int i) {
-        int ans = 1;
-        while (i-- > 0) ans *= 10;
-        return ans;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        a = sc.nextInt();
+        b = sc.nextInt();
+        while (a != 0 || b != 0) {
+            if (a > b) {
+                int tmp = b;
+                b = a;
+                a = tmp;
+            }
+            
+            for (int i = 0; i <= 9; i++) {
+                System.out.print((count(b, i) - count(a - 1, i)) + " ");
+            }
+            System.out.println();
+            
+            a = sc.nextInt();
+            b = sc.nextInt();
+        }
+        
     }
     
     static int count(int n, int x) {
@@ -70,7 +84,7 @@ class Main {
                 ret += get(num, i + 1, n - 1) * power10(i);
                 if (x == 0) ret -= power10(i);
             }
-            // acse 2
+            // case 2
             if (num.get(i) == x) ret += get(num, 0, i - 1) + 1;
             else if (num.get(i) > x) ret += power10(i); 
         }
@@ -78,26 +92,16 @@ class Main {
         return ret;
     }
     
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        a = sc.nextInt();
-        b = sc.nextInt();
-        while (a != 0 || b != 0) {
-            if (a > b) {
-                int tmp = b;
-                b = a;
-                a = tmp;
-            }
-            
-            for (int i = 0; i <= 9; i++) {
-                System.out.print((count(b, i) - count(a - 1, i)) + " ");
-            }
-            System.out.println();
-            
-            a = sc.nextInt();
-            b = sc.nextInt();
-        }
-        
+    static int get(List<Integer> num, int l, int r) {
+        int ans = 0;
+        for (int i = r; i >= l; i--) ans = ans * 10 + num.get(i);
+        return ans;
+    }
+    
+    static int power10(int i) {
+        int ans = 1;
+        while (i-- > 0) ans *= 10;
+        return ans;
     }
 }
 ```

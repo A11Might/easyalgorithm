@@ -1,4 +1,5 @@
 * 语言
 
-  * [C++](/README)
-  * [Java](/java/)
+  * [Java](/README)
+  * [C++](/cpp/)
+  * [To Do](/todo/)

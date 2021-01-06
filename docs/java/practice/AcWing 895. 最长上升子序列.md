@@ -6,7 +6,8 @@
 
 **状态表示 - f(i)**
 
-- 集合：所有以第 i 个元素结尾的上升子序列。
+- 集合：所有以第 i 个元素结尾的上升子序列
+
 - 属性：Max
 
 **状态计算 - 集合划分**
@@ -48,7 +49,7 @@ class Main {
         for (int i = 1; i <= n; i++) h[i] = sc.nextInt();
         
         for (int i = 1; i <= n; i++) {
-            f[i] = 1;
+            f[i] = 1; // 只有 a[i] 一个数
             for (int j = 1; j < i; j++) {
                 if (h[i] > h[j]) f[i] = Math.max(f[i], f[j] + 1);
             }
@@ -79,13 +80,13 @@ class Main {
         for (int i = 1; i <= n; i++) h[i] = sc.nextInt();
         
         for (int i = 1; i <= n; i++) {
-            f[i] = 1;
+            f[i] = 1; // 只有 a[i] 一个数
             g[i] = 0;
             for (int j = 1; j < i; j++) {
                 if (h[i] > h[j]) {
                     if (f[i] < f[j] + 1) {
                         f[i] = f[j] + 1;
-                        g[i] = j;
+                        g[i] = j; // 记录下每个状态是从哪个其它状态转移过来的
                     }
                 }
             }
