@@ -4,6 +4,8 @@
 
 GitHub Pages 完整阅读：[进入](http://blog.huqihh.com/easyalgorithm)
 
+Gitee Pages 完整阅读：[进入](https://qihanghu.gitee.io/easyalgorithm)
+
 ### 算法基础课
 
 - [x] 基础算法：排序、二分、高精度、前缀和与差分、双指针算法、位运算、离散化、区间合并。

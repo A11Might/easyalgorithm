@@ -1,4 +1,4 @@
-# EASY ALGORITHM
+# Easy Algorithm
 
 > QUICK AND DIRTY I WOULD NOT LIKE IT
 
